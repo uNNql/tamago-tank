@@ -1,0 +1,11 @@
+{
+	"name": "tamago-tank",
+	"description": "tamago tank",
+	"version": "0.0.1",
+	"private": true,
+	"dependencies": {
+	"express": "*",
+	"socket.io": "*",
+	"jade": "*"
+	}
+}
