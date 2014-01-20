@@ -6,6 +6,8 @@
 	"dependencies": {
 	"express": "*",
 	"socket.io": "*",
-	"jade": "*"
+	"jade": "*",
+	"johnny-five": "*",
+	"socket.io-client": "*"
 	}
 }
