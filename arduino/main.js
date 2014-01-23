@@ -1,5 +1,5 @@
 var j5 = require('johnny-five');
-var events = new require('events').EventEmitter;
+var events = require('events').EventEmitter;
 var socket = require('socket.io-client').connect('http://localhost:8888');
 
 var myBoard, myLed;
