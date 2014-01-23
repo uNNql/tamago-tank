@@ -1,4 +1,5 @@
 var j5 = require('johnny-five');
+var events = new require('events').EventEmitter;
 var socket = require('socket.io-client').connect('http://localhost:8888');
 
 var myBoard, myLed;
@@ -7,46 +8,53 @@ myBoard = new j5.Board();
 
 myBoard.on('ready', function () {
 	console.log('ready');
-	// console.log(j5.Pin.PWM)
+	var ev = new events;
 	var val = 1;
+	var sppedSet = [0, 128, 255];
+	var lSpeed = sppedSet[2];
+	var rSpeed = sppedSet[2];
+	var direction = 1;
+	socket.on('devicemotion', function (e) {
+		ev.emit('devicemotion', e.e.acg.x, e.e.acg.y);
+	});
+	socket.on('connect', function () {
+		console.log('connect socket');
+	});
+	socket.on('leave', function () {
+		console.log('disconnect');
+	});
+	ev.on('devicemotion', function (acgX, acgY) {
+		if (acgX < -4) {
+			lSpeed = sppedSet[1];
+		} else if (acgX > 4) {
+			rSpeed = sppedSet[1];
+		} else {
+			lSpeed = rSpeed = sppedSet[2];
+		}
+		if (acgY > -2) {
+			direction = 1;
+		} else {
+			direction = 0;
+		}
+	});
+	// set pin
 	this.pinMode(12, 1);
 	this.pinMode(13, 1);
 	this.pinMode(11, 3);
-	// 12 > 0, 1 > 0 静止
-	// 13 > 1, 1 > 0 正転
-	this.loop(2000, function () {
+
+	this.pinMode(4, 1);
+	this.pinMode(2, 1);
+	this.pinMode(3, 3);
+
+	this.loop(500, function () {
 		console.log('loop');
-		this.digitalWrite(12, val ? 0 : 1);
-		this.digitalWrite(13, val);
-		val = val ? 0 : 1;
-		this.analogWrite(11, 100);
+		// left motor
+		this.digitalWrite(12, !direction);
+		this.digitalWrite(13, direction);
+		this.analogWrite(11, lSpeed);
+
+		this.digitalWrite(4, direction);
+		this.digitalWrite(2, !direction);
+		this.analogWrite(3, rSpeed);
 	});
-
-	// this.digitalWrite(12, 1);
-	// this.digitalWrite(13, 0);
-	// this.analogWrite(3, 255);
-
-	// this.pinMode(1, 1);
-	// this.pinMode(2, 1);
-	// this.loop(100, function () {
-	// 	this.digitalWrite(1, 1);
-	// 	this.digitalWrite(2, 0);
-	// });
-	// this.digitalWrite(1, 1);
-	// this.digitalWrite(2, 1);
-	// myLed = new j5.Led(13);
-	// myLed.strobe(1000);
-	// this.repl.inject({
-	// 	led: myLed
-	// });
-
-	// this.pinMode(3, j5.Pin.PWM);
-	// this.loop(1000, function () {
-	// 	this.analogWrite(3, 10);
-	// });
-
 });
-
-// socket.on('devicemotion', function (e) {
-// 	console.log('devicemotion');
-// });

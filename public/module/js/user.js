@@ -9,10 +9,6 @@ var rrA = $('.rrA').find('.text');
 var rrB = $('.rrB').find('.text');
 var rrG = $('.rrG').find('.text');
 
-
-// socket.on('message', function (obj) {
-// 	console.log(obj);
-// });
 window.addEventListener('devicemotion', function (e) {
 	var ac = e.acceleration;
 	acX.text(ac.x); //x方向の傾き加速度
@@ -31,7 +27,3 @@ window.addEventListener('devicemotion', function (e) {
 
 	socket.emit('devicemotion', { ac: ac, acg: acg, rr: rr });
 });
-
-// window.addEventListener('deviceorientation', function (e) {
-// 	socket.emit('deviceorientation', e);
-// });
