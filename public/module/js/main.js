@@ -45,6 +45,7 @@
 		}
 	};
 
+	// for test
 	// tamagoList['test'] = new Tamago();
 	// tamagoList['test'].test();
 

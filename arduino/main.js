@@ -8,8 +8,7 @@ myBoard = new j5.Board();
 
 myBoard.on('ready', function () {
 	console.log('ready');
-	var ev = new events;
-	var val = 1;
+	var ev = new events();
 	var sppedSet = [0, 128, 255];
 	var lSpeed = sppedSet[2];
 	var rSpeed = sppedSet[2];
@@ -37,18 +36,22 @@ myBoard.on('ready', function () {
 			direction = 0;
 		}
 	});
-	// set pin
+
+	/**
+	 * Set pins
+	 */
+
+	// left motor
 	this.pinMode(12, 1);
 	this.pinMode(13, 1);
 	this.pinMode(11, 3);
 
+	// right motor
 	this.pinMode(4, 1);
 	this.pinMode(2, 1);
 	this.pinMode(3, 3);
 
 	this.loop(500, function () {
-		console.log('loop');
-		// left motor
 		this.digitalWrite(12, !direction);
 		this.digitalWrite(13, direction);
 		this.analogWrite(11, lSpeed);
