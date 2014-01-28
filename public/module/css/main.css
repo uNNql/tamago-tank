@@ -1,8 +1,11 @@
-.poi {
+body {
+	margin:0;
+}
+
+#user .tamago {
 	position:absolute;
-	left:0;
 	top:0;
-	background-image: url("../img/poi.png");
-	width:141px;
-	height:244px;
+	left:0;
+	width:100px;
+	height:182px;
 }
