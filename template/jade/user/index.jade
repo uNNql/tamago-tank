@@ -1,32 +1,12 @@
 doctype html
 html(lang='ja')
 	head
-		title= 'Websocket Test User'
+		meta(name='viewport',content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no')
+		title= 'Tamago Tank User'
 		script(src='/socket.io/socket.io.js')
 		script(src='./lib/chikuwa.min.js')
+		link(href='./module/css/main.css', rel='stylesheet')
 	body
-		h2 acceleration
-		ul
-			li.acX x
-				span.text
-			li.acY y
-				span.text
-			li.acZ z
-				span.text
-		h2 accelerationIncludingGravity
-		ul
-			li.acgX x
-				span.text
-			li.acgY y
-				span.text
-			li.acgZ z
-				span.text
-		h2 rotationRate
-		ul
-			li.rrA alpha
-				span.text
-			li.rrB beta
-				span.text
-			li.rrG gamma
-				span.text
+		div#user
+			img.tamago(src='./module/img/tamago.png',width='100%')
 	script(src='./module/js/user.js')
