@@ -2,6 +2,15 @@ body {
 	margin:0;
 }
 
+#main {
+	background-image: url("../img/bg.png");
+}
+
+#main #canvas {
+	margin: 0 auto;
+	background-color:transparent;
+}
+
 #user .tamago {
 	position:absolute;
 	top:0;

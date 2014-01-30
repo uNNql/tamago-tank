@@ -3,25 +3,35 @@
 	var tamagoList = {};
 	var canvas = document.getElementById('canvas');
 	var ctx = canvas.getContext('2d');
+
+	var vp = $.viewport();
+	$(canvas)
+	.attr({
+		width: vp.window.width,
+		height: vp.window.height,
+	});
 	var Tamago = function () {
 		var self = this;
 		self.img = new Image();
-		self.img.src = './module/img/tamago_test.png';
+		self.img.src = './module/img/tamago_main.png';
 		self.img.onload = function () {
 			self.draw();
 		};
 		self.x = 0;
 		self.y = 0;
-		self.width = 50;
-		self.height = 100;
 		self.angle = 0;
 		self.mod = 1;
 		self.speed = 10;
 	};
 	Tamago.prototype = {
-		devicemotion: function (acgX) {
+		devicemotion: function (acgX, acgY) {
 			var self = this;
 			self.angle += acgX;
+			if (acgY > -2) {
+				self.speed = 10;
+			} else {
+				self.speed = -10;
+			}
 		},
 		draw: function () {
 			var self = this;
@@ -50,28 +60,28 @@
 	// tamagoList['test'].test();
 
 	var timer = setInterval(function () {
-		ctx.clearRect(0, 0, 800, 600);
+		ctx.clearRect(0, 0, vp.window.width, vp.window.height);
 		Object.keys(tamagoList).forEach(function (key) {
 			tamagoList[key].draw();
 		});
 	}, 100);
 
 	socket.on('add', function (e) {
-		console.log(e.id);
+		// console.log(e.id);
 		tamagoList[e.id] = new Tamago();
 		tamagoList[e.id].test();
 	});
 
 	socket.on('leave', function (e) {
-		console.log(e.id);
+		// console.log(e.id);
 		delete tamagoList[e.id];
 	});
 
 	socket.on('devicemotion', function (e) {
-		console.log('devicemotion');
-		console.log(e);
-		console.log(e.id);
-		tamagoList[e.id].devicemotion(e.e.acg.x);
+		// console.log('devicemotion');
+		// console.log(e);
+		// console.log(e.id);
+		tamagoList[e.id].devicemotion(e.e.acg.x, e.e.acg.y);
 	});
 
 })();

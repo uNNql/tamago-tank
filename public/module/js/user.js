@@ -10,9 +10,5 @@ tamago.css({
 
 window.addEventListener('devicemotion', function (e) {
 	var acg = e.accelerationIncludingGravity;
-
-	deg += acg.x / 3;
-	tamago.rotate(deg);
-
 	socket.emit('devicemotion', {acg: acg});
 });
